@@ -9,11 +9,13 @@ class Solution {
                 if (numbers[i] + numbers[j] == target) {
                     answer[0] = i+1;
                     answer[1] = j+1;
+                    return answer;
                 }
             }
             
         }
         return answer;
+        
 
 
     }
