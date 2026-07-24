@@ -1,17 +1,24 @@
+import java.util.HashMap;
+
 class Solution {
-    public int climbStairs(int n) {
-        if (n <= 3) return n;
-
-        int prev1 = 3;
-        int prev2 = 2;
-        int cur = 0;
-
-        for (int i = 3; i < n; i++) {
-            cur = prev1 + prev2;
-            prev2 = prev1;
-            prev1 = cur;
+    int climb(int n, HashMap<Integer, Integer> m) {
+        if(m.containsKey(n)){
+            return m.get(n);
         }
 
-        return cur;        
+        else{
+            int result = climb(n - 1, m) + climb(n - 2, m);
+            m.put(n, result);   // <-- store it here, before returning
+            return result;
+        }
+    }
+    public int climbStairs(int n) {
+        HashMap <Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        map.put(-1, 0);
+        int num=n;
+        return climb(num, map);
+
+
     }
 }
