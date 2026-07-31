@@ -1,20 +1,27 @@
+import java.util.HashMap;
+
 class Solution {
+    int skip=0;
+    int take=0;
+    HashMap<Integer, Integer> map = new HashMap<>();
     public int rob(int[] nums) {
-        int n = nums.length;
+        return robFrom(nums, 0);
+    }
 
-        if (n == 1) {
-            return nums[0];
+    private int robFrom(int[] nums, int i) {
+        if (i >= nums.length) {
+            return 0; // ran out of houses, nothing to add
         }
-
-        int[] dp = new int[n];
-
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
-
-        for (int i = 2; i < n; i++) {
-            dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2]);
+        if(map.containsKey(i)){
+            return map.get(i);
         }
-
-        return dp[n - 1];        
+        else{
+            int skip = robFrom(nums, i + 1);
+            int take = nums[i] + robFrom(nums, i + 2);
+            map.put(i, Math.max(skip, take));
+            return Math.max(skip, take);
+        }
+        
+        
     }
 }
